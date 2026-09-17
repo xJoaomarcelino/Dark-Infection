@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complexo Zero - Open World Survival Horror</title>
+    <!-- Three.js CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Menu Principal -->
+    <div id="main-menu" class="overlay-screen">
+        <div class="menu-container">
+            <h1 class="game-title">COMPLEXO ZERO</h1>
+            <p class="game-subtitle">Iluminação Cinematográfica & Sobrevivência Urbana</p>
+            <div class="instructions-box">
+                <p><strong>[ W, A, S, D ]</strong> Movimentação Livre</p>
+                <p><strong>[ MOUSE ]</strong> Olhar / Mirar</p>
+                <p><strong>[ E ]</strong> Coletar Itens / Interagir</p>
+                <p><strong>[ I ]</strong> Abrir / Fechar Inventário</p>
+                <p><strong>[ CLIQUE ESQ. ]</strong> Atirar</p>
+                <p><strong>[ R ]</strong> Recarregar Arma</p>
+                <p><em>Explore a cidade abandonada com visibilidade equilibrada e clima sombrio!</em></p>
+            </div>
+            <button id="start-btn" class="horror-btn">EXPLORAR A CIDADE</button>
+        </div>
+    </div>
+
+    <!-- Interface HUD do Jogo -->
+    <div id="hud" class="hidden">
+        <div class="crosshair" id="crosshair">+</div>
+        
+        <!-- Bússola / Região Atual -->
+        <div id="region-tracker" class="region-banner">ÁREA RESIDENCIAL ABANDONADA</div>
+
+        <!-- Barra de Vida do Chefe -->
+        <div id="boss-hud" class="boss-hud-container hidden">
+            <div class="boss-info-header">
+                <span id="boss-name-text">O TECNO-CARNICEIRO</span>
+                <span id="boss-hp-val">100%</span>
+            </div>
+            <div class="boss-hp-bar-outer">
+                <div id="boss-hp-bar"></div>
+            </div>
+        </div>
+
+        <!-- Painel Superior Esquerdo: Status do Jogador -->
+        <div class="hud-panel left-panel">
+            <div class="stat-group">
+                <span>CONDIÇÃO:</span>
+                <div class="hp-bar-container">
+                    <div id="hp-bar"></div>
+                </div>
+                <span id="hp-text">100%</span>
+            </div>
+            <div class="stat-group">
+                <span>MUNIÇÃO:</span> <span id="ammo-text">12 / 12</span>
+            </div>
+            <div class="stat-group">
+                <span>ARMA:</span> <span id="weapon-text" style="color:#ff5522;">Pistola Tática</span>
+            </div>
+        </div>
+
+        <!-- Painel Superior Direito: Progresso e Exploração -->
+        <div class="hud-panel right-panel">
+            <div class="stat-group"><span>ITENS COLETADOS:</span> <span id="items-collected-text" style="color:#ffaa00;">0 / 10</span></div>
+            <div class="stat-group"><span>INIMIGOS ELIMINADOS:</span> <span id="kills-text">0</span></div>
+            <div class="stat-group"><span>PONTUAÇÃO:</span> <span id="score-text" style="color:#00ff88;">0</span></div>
+            <div class="stat-group"><span>TEMPO:</span> <span id="time-text">00:00</span></div>
+        </div>
+
+        <!-- Alertas e Mensagens -->
+        <div id="combo-display" class="combo-banner hidden">COMBO x2!</div>
+        <div id="interaction-prompt" class="interaction-prompt">[ E ] Coletar Item</div>
+    </div>
+
+    <!-- Tela de Inventário -->
+    <div id="inventory-screen" class="inventory-overlay hidden">
+        <div class="inventory-window">
+            <h2>INVENTÁRIO & ITENS COLETADOS</h2>
+            <div class="inventory-grid" id="inventory-slots"></div>
+            <div class="inventory-actions">
+                <button id="inv-use-btn" class="horror-btn-small">USAR / EQUIPAR</button>
+                <button id="inv-combine-btn" class="horror-btn-small">COMBINAR</button>
+                <button id="inv-discard-btn" class="horror-btn-small discard">DESCARTAR</button>
+                <button id="inv-close-btn" class="horror-btn-small">FECHAR [I]</button>
+            </div>
+            <div id="inventory-desc" class="inventory-description">Selecione um item para ver detalhes.</div>
+        </div>
+    </div>
+
+    <!-- Tela de Game Over -->
+    <div id="gameover-screen" class="overlay-screen hidden">
+        <div class="menu-container">
+            <h1 class="game-title death-title">VOCÊ PERECEU</h1>
+            <p class="game-subtitle">A cidade abandonada consumiu mais uma alma...</p>
+            <div class="instructions-box" id="final-stats-box" style="text-align: center;">
+                <p>Itens Coletados: <span id="final-items">0</span></p>
+                <p>Inimigos Eliminados: <span id="final-kills">0</span></p>
+                <p>Pontuação Final: <span id="final-score">0</span></p>
+            </div>
+            <button id="restart-btn" class="horror-btn">TENTAR NOVAMENTE</button>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
