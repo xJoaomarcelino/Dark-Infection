@@ -108,3 +108,50 @@
     <script src="game.js"></script>
 </body>
 </html>
+<!-- INTERFACE DO INVENTÁRIO -->
+<div id="inventory-overlay" class="inv-overlay hidden">
+    <div id="inventory-window" class="inv-window">
+      
+      <!-- CABEÇALHO COM METRICAS DE CARGA -->
+      <div class="inv-header">
+        <h2>MOCHILA DE SOBREVIVÊNCIA</h2>
+        <div class="weight-tracker">
+          <span>PESO: <strong id="weight-val">0.0</strong> / <span id="max-weight-val">30.0</span> kg</span>
+          <div class="weight-bar-bg"><div id="weight-bar-fill" class="weight-bar-fill"></div></div>
+        </div>
+      </div>
+  
+      <div class="inv-body">
+        <!-- GRID DA MOCHILA (5x6 = 30 SLOTS) -->
+        <div class="grid-container">
+          <h3>EQUIPAMENTO DE CAMPO</h3>
+          <div id="inventory-grid" class="inv-grid"></div>
+        </div>
+  
+        <!-- PAINEL LATERAL: INSPEÇÃO E LIXO -->
+        <div class="inv-sidebar">
+          <div id="drop-zone" class="drop-zone">
+            <div class="drop-icon">🗑️</div>
+            <span>DESCARTAR NO CHÃO</span>
+          </div>
+        </div>
+      </div>
+  
+      <!-- HOTBAR (ACESSO RÁPIDO 1-5) -->
+      <div class="hotbar-container">
+        <h3>ACESSO RÁPIDO (1-5)</h3>
+        <div id="hotbar-grid" class="hotbar-grid"></div>
+      </div>
+  
+    </div>
+  </div>
+  
+  <!-- TOOLTIP INFORMATIVO FLUTUANTE -->
+  <div id="inv-tooltip" class="inv-tooltip hidden"></div>
+  
+  <!-- MENU DE CONTEXTO (BOTÃO DIREITO) -->
+  <div id="context-menu" class="context-menu hidden">
+    <button id="ctx-use">Usar / Equipar</button>
+    <button id="ctx-split">Dividir Pilha (Split)</button>
+    <button id="ctx-drop">Descartar no Chão</button>
+  </div>
