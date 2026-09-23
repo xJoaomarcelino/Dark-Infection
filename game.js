@@ -1188,3 +1188,59 @@ function animate() {
         renderer.render(scene, camera);
     }
 }
+// =================================================================
+// INTEGRAÇÃO COM O TEU JOGO PRINCIPAL (game.js)
+// =================================================================
+
+// 1. Instanciar o Sistema de Inventário Globalmente
+const gameInventory = new InventorySystem(5, 6, 30.0); // 5 linhas, 6 colunas, Máx 30kg
+
+// Povoar com alguns itens iniciais de teste
+gameInventory.addItem(new Item('medkit', 2));
+gameInventory.addItem(new Item('pistol', 1));
+gameInventory.addItem(new Item('ammo_9mm', 45));
+gameInventory.addItem(new Item('water', 3));
+
+// 2. Atalhos de Teclado (Tecla 'I' e Hotbar 1-5)
+window.addEventListener('keydown', (e) => {
+  // Tecla 'I' para Abrir/Fechar Mochila
+  if (e.key.toLowerCase() === 'i') {
+    const overlay = document.getElementById('inventory-overlay');
+    const isHidden = overlay.classList.contains('hidden');
+
+    if (isHidden) {
+      overlay.classList.remove('hidden');
+      document.exitPointerLock(); // Solta o ponteiro do mouse no Three.js
+    } else {
+      overlay.classList.add('hidden');
+      gameInventory.hideContextMenu();
+      gameInventory.hideTooltip();
+      document.body.requestPointerLock(); // Devolve o controle de visão ao 3D
+    }
+  }
+
+  // Teclas 1 a 5 para Acesso Rápido na Hotbar
+  if (['1', '2', '3', '4', '5'].includes(e.key)) {
+    const hotbarIndex = parseInt(e.key) - 1;
+    const item = gameInventory.hotbarSlots[hotbarIndex];
+
+    if (item) {
+      console.log(`[HOTBAR ATIVADA] Usou o slot ${e.key}: ${item.name}`);
+      
+      // Se for arma -> Equipar no jogador
+      if (item.type === 'weapon') {
+        // Ex: selectWeaponByName(item.name);
+      } 
+      // Se for consumível -> Usar e restaurar vida
+      else if (item.type === 'consumable') {
+        if (item.stats.heal) {
+          player.hp = Math.min(100, player.hp + item.stats.heal);
+          updateHUD();
+        }
+        item.count--;
+        if (item.count <= 0) gameInventory.hotbarSlots[hotbarIndex] = null;
+        gameInventory.render();
+      }
+    }
+  }
+});
